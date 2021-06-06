@@ -4,6 +4,7 @@
 #include "cudaDmy.cuh"
 #include "cudaMultiplier_standard.cuh"
 #include "common.cuh"
+#include "matrix_transpose.cuh"
 #include <iostream>
 
 __global__ void launch_multiplication_standard(int *m1, int *m2_trans, int *res, int m, int n, int k){
@@ -20,18 +21,7 @@ __global__ void launch_multiplication_standard(int *m1, int *m2_trans, int *res,
     }
 }
 
-__global__ void transpose_matrix(int *in, int *out, int m, int n){
 
-    int row = blockIdx.y * blockDim.y + threadIdx.y;
-    int col = blockIdx.x * blockDim.x + threadIdx.x;
-
-
-    if(row < m && col < n){
-        int pos = n * row + col;
-        int trans_pos =  m* col + row;
-        out[trans_pos] = in[pos];
-    }
-}
 
 
 
@@ -61,7 +51,7 @@ void cuda_multiply_standard(int **m1, int **m2, int **res, uint m, uint n, uint 
     dim3 block(BLOCK_SIZE, BLOCK_SIZE);
     dim3 grid_trans(ceilf((float) k/(float)BLOCK_SIZE),ceilf((float) n/(float)BLOCK_SIZE));
     CHECK(cudaDeviceSynchronize());
-    transpose_matrix<<<grid_trans, block>>>(d_m2, d_m2_trans, n,k);
+    transpose_matrix_naive<<<grid_trans, block>>>(d_m2, d_m2_trans, n,k);
     //Grid for multiplication
     dim3 grid(ceilf((float) k/(float)BLOCK_SIZE),ceilf((float) m/(float)BLOCK_SIZE));
 

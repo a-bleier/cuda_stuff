@@ -4,7 +4,7 @@ set(SOCURCES "")
 
 
 include_directories(${cudaTest_SOURCE_DIR}/inc)
-add_executable(cudaTest main.cu cudaMultiplier_own.cu cudaMultiplier_standard.cu)
+add_executable(cudaTest main.cu cudaMultiplier_own.cu cudaMultiplier_standard.cu matrix_transpose.cu)
 
 set_target_properties(
         cudaTest

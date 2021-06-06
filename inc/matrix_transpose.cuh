@@ -1,0 +1,1 @@
+__global__ void transpose_matrix_naive(int *in, int *out, int m, int n);
