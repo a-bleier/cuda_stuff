@@ -5,9 +5,9 @@
 
 int main() {
 
-    const int M = 2245;
-    const int N = 3333;
-    const int K = 2121;
+    const int M = 2789;
+    const int N = 3003;
+    const int K = 2235;
 
     printf("Multiplying a %dx%d with %dx%d\n", M, N, N, K);
     int** m1 = generateRandomMatrix(M, N);

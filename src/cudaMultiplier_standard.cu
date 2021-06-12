@@ -51,7 +51,7 @@ void cuda_multiply_standard(int **m1, int **m2, int **res, uint m, uint n, uint 
     dim3 block(BLOCK_SIZE, BLOCK_SIZE);
     dim3 grid_trans(ceilf((float) k/(float)BLOCK_SIZE),ceilf((float) n/(float)BLOCK_SIZE));
     CHECK(cudaDeviceSynchronize());
-    transpose_matrix_naive<<<grid_trans, block>>>(d_m2, d_m2_trans, n,k);
+    transpose_matrix_shared<int><<<grid_trans, block>>>(d_m2, d_m2_trans, (int) n, (int) k);
     //Grid for multiplication
     dim3 grid(ceilf((float) k/(float)BLOCK_SIZE),ceilf((float) m/(float)BLOCK_SIZE));
 
